@@ -5,7 +5,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "start": "nuxt dev -p $PORT"
+    "start": "node .output/server/index.mjs -p $PORT"
   },
   "devDependencies": {
     "@types/three": "^0.140.0",
