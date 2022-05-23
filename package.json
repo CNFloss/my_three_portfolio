@@ -5,7 +5,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "start": "npm run build && node .output/server/index.mjs"
+    "start": "npm install && npm run build && node .output/server/index.mjs"
   },
   "devDependencies": {
     "@types/three": "^0.140.0",
