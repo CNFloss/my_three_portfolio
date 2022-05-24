@@ -2,8 +2,8 @@
 import { onMounted } from "vue";
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { BasicCharacterController } from "./utils/BasicCharacterController";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { BasicCharacterController } from "./utils/BasicCharacterController.js";
 import PickHelper from "./utils/PickHelper";
 
 class CharacterControllerDemo {

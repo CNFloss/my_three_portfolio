@@ -8,19 +8,19 @@ const assets = {
   "/_nuxt/entry-3538e376.mjs": {
     "type": "application/javascript",
     "etag": "\"e1abc-QLsHR/g81ZyjFA9cba2vKU0JfHc\"",
-    "mtime": "2022-05-23T17:20:36.901Z",
+    "mtime": "2022-05-24T18:28:28.253Z",
     "path": "../public/_nuxt/entry-3538e376.mjs"
   },
   "/_nuxt/entry.27253da5.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"1f41-Ufa06yzjDp1S2DRvyPn/YuAI564\"",
-    "mtime": "2022-05-23T17:20:36.901Z",
+    "mtime": "2022-05-24T18:28:27.901Z",
     "path": "../public/_nuxt/entry.27253da5.css"
   },
   "/_nuxt/manifest.json": {
     "type": "application/json",
     "etag": "\"cb-1d6inUw0z+G0Bm7xEhs1otYngUc\"",
-    "mtime": "2022-05-23T17:20:36.901Z",
+    "mtime": "2022-05-24T18:28:27.841Z",
     "path": "../public/_nuxt/manifest.json"
   }
 };
