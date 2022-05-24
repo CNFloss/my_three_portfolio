@@ -2,7 +2,6 @@
   "private": true,
   "bundledDependencies": [
     "source-map-support",
-    "h3",
     "unenv",
     "ohmyfetch",
     "radix3",
@@ -15,6 +14,7 @@
     "three",
     "cannon-es",
     "destr",
+    "h3",
     "cookie-es",
     "node-fetch",
     "source-map",

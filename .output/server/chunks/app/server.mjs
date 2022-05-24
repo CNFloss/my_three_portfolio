@@ -1,5 +1,5 @@
 import { v as vue_cjs_prod, r as require$$0, s as serverRenderer } from '../index.mjs';
-import { hasProtocol, parseQuery, parseURL, withBase, withQuery } from 'ufo';
+import { hasProtocol, parseQuery, joinURL, parseURL, withBase, withQuery } from 'ufo';
 import * as THREE from 'three';
 import { Vector3 } from 'three';
 import * as CANNON from 'cannon-es';
@@ -259,6 +259,10 @@ const Headers = _globalThis$2.Headers;
 const $fetch = createFetch({ fetch, Headers });
 const appConfig = useRuntimeConfig$1().app;
 const baseURL = () => appConfig.baseURL;
+const publicAssetsURL = (...path) => {
+  const publicBase = appConfig.cdnURL || appConfig.baseURL;
+  return path.length ? joinURL(publicBase, ...path) : publicBase;
+};
 function flatHooks(configHooks, hooks = {}, parentName) {
   for (const key in configHooks) {
     const subHook = configHooks[key];
@@ -4031,6 +4035,7 @@ class CharacterFSM extends FiniteStateMachine {
     this._AddState("walk", WalkState);
   }
 }
+const TEXTURE = publicAssetsURL(`VoxelRPGCharacters/Content/Textures/DungeonCrawler_Character.png`);
 class BasicCharacterControllerProxy {
   constructor(animations) {
     this._animations = animations;
@@ -4053,11 +4058,11 @@ class BasicCharacterController {
   }
   _LoadModels() {
     const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load("./assets/VoxelRPGCharacters/Content/Textures/DungeonCrawler_Character.png", (texture2) => {
+    const texture = textureLoader.load(TEXTURE, (texture2) => {
       return texture2;
     });
     const loader = new FBXLoader();
-    loader.setPath("./assets/VoxelRPGCharacters/Content/Characters/");
+    loader.setPath("/VoxelRPGCharacters/Content/Characters/");
     loader.load("DungeonCrawler_Character.fbx", (fbx) => {
       fbx.scale.setScalar(0.1);
       fbx.traverse((c) => {
@@ -4092,7 +4097,7 @@ class BasicCharacterController {
         };
       };
       const loader2 = new FBXLoader(this._manager);
-      loader2.setPath("assets/Animations/");
+      loader2.setPath("/Animations/");
       loader2.load("Standard_Walk.fbx", (a) => {
         _OnLoad("walk", a);
       });

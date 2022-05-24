@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import * as CANNON from "cannon-es";
 import { CharacterFSM } from "./states/UnitStateMachine";
+import TEXTURE from "/VoxelRPGCharacters/Content/Textures/DungeonCrawler_Character.png";
 
 class BasicCharacterControllerProxy {
   constructor(animations) {
@@ -32,14 +33,11 @@ export class BasicCharacterController {
 
   _LoadModels() {
     const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load(
-      "./assets/VoxelRPGCharacters/Content/Textures/DungeonCrawler_Character.png",
-      (texture) => {
-        return texture;
-      }
-    );
+    const texture = textureLoader.load(TEXTURE, (texture) => {
+      return texture;
+    });
     const loader = new FBXLoader();
-    loader.setPath("./assets/VoxelRPGCharacters/Content/Characters/");
+    loader.setPath("/VoxelRPGCharacters/Content/Characters/");
     loader.load("DungeonCrawler_Character.fbx", (fbx) => {
       fbx.scale.setScalar(0.1);
       let geometries = [];
@@ -88,7 +86,7 @@ export class BasicCharacterController {
       };
 
       const loader = new FBXLoader(this._manager);
-      loader.setPath("assets/Animations/");
+      loader.setPath("/Animations/");
       loader.load("Standard_Walk.fbx", (a) => {
         _OnLoad("walk", a);
       });
