@@ -3,6 +3,7 @@ import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import * as CANNON from "cannon-es";
 import { CharacterFSM } from "./states/UnitStateMachine";
 import TEXTURE from "/VoxelRPGCharacters/Content/Textures/DungeonCrawler_Character.png";
+import CannonUtils from "./CannonUtils";
 
 class BasicCharacterControllerProxy {
   constructor(animations) {
@@ -40,25 +41,12 @@ export class BasicCharacterController {
     loader.setPath("/VoxelRPGCharacters/Content/Characters/");
     loader.load("DungeonCrawler_Character.fbx", (fbx) => {
       fbx.scale.setScalar(0.1);
-      let geometries = [];
       fbx.traverse((c) => {
-        if (c.isMesh) {
+        if (c.isMesh && c.geometry) {
           c.material.map = texture;
-        }
-        if (c.geometry) {
-          let verts = [];
-          let vertices = c.geometry.getAttribute("position");
-          for (let i = 0; i < vertices.count; i += 3) {
-            verts.push(
-              new CANNON.Vec3(
-                vertices.array[i],
-                vertices.array[i + 1],
-                vertices.array[i + 2]
-              )
-            );
-          }
-          geometries.push(verts);
-          this._body.addShape(new CANNON.ConvexPolyhedron({ vertices: verts }));
+          let geometry = c.geometry;
+          let physicsShape = CannonUtils.CreateConvexPolyhedron(geometry, 0.1);
+          this._body.addShape(physicsShape);
         }
         c.castShadow = true;
       });
@@ -101,7 +89,29 @@ export class BasicCharacterController {
       return;
     }
 
+    if (this._point) {
+      const temp = new CANNON.Vec3(this._point.x, this._point.y, this._point.z);
+      console.log(
+        (Math.atan2(
+          this._body.position.z - this._point.z,
+          this._body.position.x - this._point.x
+        ) *
+          180) /
+          Math.PI
+      );
+      /*this._body.quaternion.setFromEuler(
+        0,
+        Math.atan2(
+          this._body.position.z - this._point.z,
+          this._body.position.x - this._point.x
+        ),
+        0
+      );*/
+      this._point = null;
+    }
+
     this._target.position.copy(this._body.position);
+    this._target.quaternion.copy(this._body.quaternion);
     this._stateMachine.Update(timeInSeconds, this._point);
 
     if (this._mixer) {

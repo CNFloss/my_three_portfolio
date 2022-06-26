@@ -2,6 +2,7 @@
 import { onMounted } from "vue";
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
+import CannonDebugger from "cannon-es-debugger";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { BasicCharacterController } from "./utils/BasicCharacterController.js";
 import PickHelper from "./utils/PickHelper";
@@ -63,6 +64,11 @@ class CharacterControllerDemo {
     this._camera.position.set(25, 10, 25);
 
     this._scene = new THREE.Scene();
+    this._physicsDebugger = new CannonDebugger(this._scene, this._world, {
+      onInit: (body, mesh, shape) => {
+        //console.log(body, mesh, shape);
+      },
+    });
 
     let light = new THREE.DirectionalLight(0xffffff, 1.0);
     light.position.set(-100, 100, 100);
@@ -132,6 +138,8 @@ class CharacterControllerDemo {
       if (this._previousRAF === null) {
         this._previousRAF = t;
       }
+      this._world.fixedStep();
+      this._physicsDebugger.update();
 
       this._RAF();
 
@@ -139,7 +147,6 @@ class CharacterControllerDemo {
       this._Step(t - this._previousRAF);
       this._previousRAF = t;
     });
-    this._world.fixedStep();
   }
 
   _Step(timeElapsed) {

@@ -15,7 +15,6 @@ export default class PickHelper {
     // get the list of objects the ray intersected
     const intersectedObjects = this.raycaster.intersectObjects(scene.children);
     if (intersectedObjects.length) {
-      console.log(intersectedObjects[0].point);
       this.pickedObject = intersectedObjects[0].object;
       const point = new Vector3().copy(intersectedObjects[0].point);
       point.y = 0;
